@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'ImageSwitch.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Courier New',
+                  fontFamily: 'BungeeSpicer',
                 ),
               ),
             ],
@@ -83,23 +85,7 @@ class MyApp extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 140,
-                      height: 220,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          'assets/images/game.png',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: Colors.grey[300],
-                              child: Icon(Icons.sports_esports, size: 50, color: Colors.grey),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+                    ImageSwitch(),
 
                     SizedBox(width: 20),
 
@@ -191,3 +177,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
