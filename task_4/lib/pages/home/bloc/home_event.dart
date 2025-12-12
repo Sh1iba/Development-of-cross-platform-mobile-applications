@@ -5,6 +5,11 @@ sealed class HomeEvent {}
 
 final class LoadGameGenresEvent extends HomeEvent {}
 
+final class SearchGameGenresEvent extends HomeEvent {
+  final String query;
+  SearchGameGenresEvent(this.query);
+}
+
 /*
 • Events (События): это входные данные или действия, которые происходят в приложении. Они
 могут быть инициированы пользователем – пользовательские события (например, нажатие кнопки,

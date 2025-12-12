@@ -1,18 +1,37 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GameGenre {
+  final int? id;
   final String title;
   final String description;
   final String iconCode;
 
   GameGenre({
+    this.id,
     required this.title,
     required this.description,
     required this.iconCode,
   });
 
+  factory GameGenre.fromMap(Map<String, dynamic> map) {
+    return GameGenre(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      iconCode: map['iconCode'],
+    );
+  }
+
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'iconCode': iconCode,
+    };
+  }
 
   IconData get iconData => _getIconData(iconCode);
 

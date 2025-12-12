@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_4/pages/detail/detail_page.dart';
+import 'package:task_4/pages/home/home_page.dart';
+import 'package:task_4/pages/loading/loading_page.dart';
+import 'package:task_4/pages/login/login_page.dart';
+import 'package:task_4/pages/profile/profile_page.dart';
+import 'package:task_4/pages/register/register_page.dart';
 
+import 'di/di.dart';
 import 'core/routes.dart';
-import 'pages/loading/loading_page.dart';
-import 'pages/login/login_page.dart';
-import 'pages/register/register_page.dart';
-import 'pages/home/bloc/home_bloc.dart';
-import 'pages/home/home_page.dart';
-import 'pages/detail/detail_page.dart';
-import 'pages/profile/profile_page.dart';
-import 'models/game_genre.dart';
+import 'data/models/game_genre.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  configureDependencies();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,15 +27,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'GameLab',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+      ),
       initialRoute: Routes.loading,
       routes: {
         Routes.loading: (context) => const LoadingPage(),
         Routes.login: (context) => const LoginPage(),
         Routes.register: (context) => const RegisterPage(),
-        Routes.home: (context) => BlocProvider(
-          create: (context) => HomeBloc()..add(LoadGameGenresEvent()),
-          child: const HomePage(),
-        ),
+        Routes.home: (context) => const HomePage(),
         Routes.profile: (context) => ProfilePage(
           name: 'Зафар Иброгимов',
           email: 'zafar@mail.ru',

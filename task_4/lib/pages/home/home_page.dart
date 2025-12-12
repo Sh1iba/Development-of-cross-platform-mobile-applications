@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../di/di.dart';
 import '../profile/profile_page.dart';
-import 'home_content.dart';
 import 'bloc/home_bloc.dart';
-
+import 'home_content.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  //внедрение зависимостей (Dependency Injection)
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc()
-        ..add(LoadGameGenresEvent()),
+      // Получаем BLoC через GetIt DI
+      create: (context) => getIt<HomeBloc>()..add(LoadGameGenresEvent()),
       child: const _HomePageContent(),
     );
   }
@@ -34,7 +33,7 @@ class __HomePageContentState extends State<_HomePageContent> {
     const HomeContent(),
     const Center(child: Text('Поиск')),
     const Center(child: Text('Избранное')),
-    const ProfilePage(name: 'Иван Иванов', email: 'ivan@example.com'),
+    const ProfilePage(name: 'Зафар Иброгимов', email: 'zafar@mail.ru'),
   ];
 
   void _onItemTapped(int index) {

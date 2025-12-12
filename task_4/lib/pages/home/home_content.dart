@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../models/game_genre.dart';
+import '../../data/models/game_genre.dart';
 import 'bloc/home_bloc.dart';
-
 import '../detail/detail_page.dart';
 
 class HomeContent extends StatelessWidget {
@@ -39,8 +37,6 @@ class HomeContent extends StatelessWidget {
         } else if (state is HomeLoaded) {
           return _buildContent(context, state.gameGenres);
         }
-
-        // HomeInitial state
         return const Center(child: Text('Нажмите для загрузки данных'));
       },
     );

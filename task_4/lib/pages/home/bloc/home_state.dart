@@ -9,13 +9,26 @@ final class HomeLoading extends HomeState {}
 
 final class HomeLoaded extends HomeState {
   final List<GameGenre> gameGenres;
+  final List<GameGenre> filteredGenres;
 
-  HomeLoaded(this.gameGenres);
+  HomeLoaded({
+    required this.gameGenres,
+    required this.filteredGenres,
+  });
+
+  HomeLoaded copyWith({
+    List<GameGenre>? gameGenres,
+    List<GameGenre>? filteredGenres,
+  }) {
+    return HomeLoaded(
+      gameGenres: gameGenres ?? this.gameGenres,
+      filteredGenres: filteredGenres ?? this.filteredGenres,
+    );
+  }
 }
 
 final class HomeError extends HomeState {
   final String message;
-
   HomeError(this.message);
 }
 

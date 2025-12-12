@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/game_genre.dart';
+import '../../data/models/game_genre.dart';
+
 
 class DetailPage extends StatelessWidget {
   final GameGenre genre;
