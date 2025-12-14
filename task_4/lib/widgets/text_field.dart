@@ -59,15 +59,29 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return TextFormField(
       controller: widget.controller,
       focusNode: widget.focusNode,
       obscureText: widget.isPassword && _hidePassword,
+      style: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+      ),
       decoration: InputDecoration(
         labelText: widget.labelText,
-        prefixIcon: Icon(_getIcon()),
+        labelStyle: TextStyle(
+          color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+        ),
+        prefixIcon: Icon(
+          _getIcon(),
+          color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+        ),
         suffixIcon: widget.isPassword ? IconButton(
-          icon: Icon(_hidePassword ? Icons.visibility : Icons.visibility_off),
+          icon: Icon(
+            _hidePassword ? Icons.visibility : Icons.visibility_off,
+            color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+          ),
           onPressed: () {
             setState(() {
               _hidePassword = !_hidePassword;
@@ -77,6 +91,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: isDark ? Colors.grey.shade600 : Colors.grey.shade300,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: isDark ? Color(0xFF64B5F6) : Color(0xFF507ED1),
+          ),
+        ),
+        filled: true,
+        fillColor: isDark ? Color(0xFF2D2D2D) : Colors.grey.shade50,
       ),
       validator: _validateInput,
       onFieldSubmitted: (_) {

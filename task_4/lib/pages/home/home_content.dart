@@ -9,6 +9,8 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeLoading) {
@@ -35,14 +37,14 @@ class HomeContent extends StatelessWidget {
             ),
           );
         } else if (state is HomeLoaded) {
-          return _buildContent(context, state.gameGenres);
+          return _buildContent(context, state.gameGenres, isDark);
         }
         return const Center(child: Text('Нажмите для загрузки данных'));
       },
     );
   }
 
-  Widget _buildContent(BuildContext context, List<GameGenre> gameGenres) {
+  Widget _buildContent(BuildContext context, List<GameGenre> gameGenres, bool isDark) {
     final mediaQuery = MediaQuery.of(context);
     final bool isWideScreen = mediaQuery.size.width > 600;
     final double platformPadding = isWideScreen ? 50 : 20;
@@ -57,7 +59,7 @@ class HomeContent extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF3A3A3A),
+                color: isDark ? Colors.white : Color(0xFF3A3A3A),
               ),
               textAlign: TextAlign.left,
             ),
@@ -73,7 +75,7 @@ class HomeContent extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 height: 1.5,
-                color: Color(0xFF3A3A3A),
+                color: isDark ? Colors.grey.shade300 : Color(0xFF3A3A3A),
               ),
               textAlign: TextAlign.justify,
             ),
@@ -86,11 +88,11 @@ class HomeContent extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  _buildImage("assets/images/1.png"),
-                  _buildImage("assets/images/3.png"),
-                  _buildImage("assets/images/4.png"),
-                  _buildImage("assets/images/5.png"),
-                  _buildImage("assets/images/2.png"),
+                  _buildImage("assets/images/1.png", isDark),
+                  _buildImage("assets/images/3.png", isDark),
+                  _buildImage("assets/images/4.png", isDark),
+                  _buildImage("assets/images/5.png", isDark),
+                  _buildImage("assets/images/2.png", isDark),
                 ],
               ),
             ),
@@ -99,8 +101,8 @@ class HomeContent extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
             child: isWideScreen
-                ? _buildGridView(gameGenres)
-                : _buildListView(gameGenres),
+                ? _buildGridView(gameGenres, isDark)
+                : _buildListView(gameGenres, isDark),
           ),
 
           Padding(
@@ -118,8 +120,11 @@ class HomeContent extends StatelessWidget {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          color: Colors.grey[300],
-                          child: Icon(Icons.person, color: Colors.grey[600]),
+                          color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                          child: Icon(
+                              Icons.person,
+                              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600
+                          ),
                         );
                       },
                     ),
@@ -137,7 +142,7 @@ class HomeContent extends StatelessWidget {
                         'Иброгимов Зафарбек Акбар угли',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF3A3A3A),
+                          color: isDark ? Colors.white : Color(0xFF3A3A3A),
                         ),
                       ),
 
@@ -147,7 +152,7 @@ class HomeContent extends StatelessWidget {
                         'ИКБО-35-22',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xFF3A3A3A),
+                          color: isDark ? Colors.grey.shade300 : Color(0xFF3A3A3A),
                         ),
                       ),
                     ],
@@ -161,7 +166,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildListView(List<GameGenre> gameGenres) {
+  Widget _buildListView(List<GameGenre> gameGenres, bool isDark) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -173,29 +178,30 @@ class HomeContent extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          color: isDark ? Color(0xFF1E1E1E) : Colors.white,
           child: ListTile(
             leading: Icon(
               gameGenres[index].iconData,
-              color: Color(0xFF507ED1),
+              color: isDark ? Color(0xFF64B5F6) : Color(0xFF507ED1),
               size: 28,
             ),
             title: Text(
               gameGenres[index].title,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF3A3A3A),
+                color: isDark ? Colors.white : Color(0xFF3A3A3A),
               ),
             ),
             subtitle: Text(
               gameGenres[index].description,
               style: TextStyle(
                 fontSize: 12,
-                color: Color(0xFF3A3A3A),
+                color: isDark ? Colors.grey.shade300 : Color(0xFF3A3A3A),
               ),
             ),
             trailing: Icon(
               Icons.arrow_forward_ios,
-              color: Colors.grey,
+              color: isDark ? Colors.grey.shade400 : Colors.grey,
               size: 16,
             ),
             onTap: () {
@@ -212,7 +218,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildGridView(List<GameGenre> gameGenres) {
+  Widget _buildGridView(List<GameGenre> gameGenres, bool isDark) {
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -229,6 +235,7 @@ class HomeContent extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          color: isDark ? Color(0xFF1E1E1E) : Colors.white,
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
@@ -247,7 +254,7 @@ class HomeContent extends StatelessWidget {
                 children: [
                   Icon(
                     gameGenres[index].iconData,
-                    color: Color(0xFF507ED1),
+                    color: isDark ? Color(0xFF64B5F6) : Color(0xFF507ED1),
                     size: 24,
                   ),
                   SizedBox(height: 8),
@@ -255,7 +262,7 @@ class HomeContent extends StatelessWidget {
                     gameGenres[index].title,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF3A3A3A),
+                      color: isDark ? Colors.white : Color(0xFF3A3A3A),
                       fontSize: 14,
                     ),
                     maxLines: 2,
@@ -266,7 +273,7 @@ class HomeContent extends StatelessWidget {
                     gameGenres[index].description,
                     style: TextStyle(
                       fontSize: 10,
-                      color: Color(0xFF3A3A3A),
+                      color: isDark ? Colors.grey.shade300 : Color(0xFF3A3A3A),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -280,7 +287,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildImage(String path) {
+  Widget _buildImage(String path, bool isDark) {
     return Container(
       width: 140,
       margin: EdgeInsets.symmetric(horizontal: 5),
@@ -291,8 +298,11 @@ class HomeContent extends StatelessWidget {
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
             return Container(
-              color: Colors.grey[300],
-              child: Icon(Icons.image, color: Colors.grey[600]),
+              color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+              child: Icon(
+                  Icons.image,
+                  color: isDark ? Colors.grey.shade400 : Colors.grey.shade600
+              ),
             );
           },
         ),

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../core/routes.dart';
+import '../../theme/theme_toggle_action.dart'; // Добавляем импорт
+
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -22,8 +23,15 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Color(0xFF507ED1),
+      appBar: AppBar(
+        backgroundColor: isDark ? Color(0xFF032E6D) : Color(0xFF507ED1),
+        foregroundColor: Colors.white,
+        actions: [ThemeToggleAction()], // Добавляем переключатель
+      ),
+      backgroundColor: isDark ? Color(0xFF032E6D) : Color(0xFF507ED1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

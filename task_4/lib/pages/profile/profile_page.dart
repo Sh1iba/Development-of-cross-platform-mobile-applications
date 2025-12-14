@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../core/routes.dart';
 import '../../widgets/text_field.dart';
 
@@ -18,11 +17,12 @@ class ProfilePage extends StatelessWidget {
   }
 
   void _saveProfile() {
-
+    // Сохранение профиля
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController _passwordController = TextEditingController();
     final TextEditingController _confirmPasswordController = TextEditingController();
     final FocusNode _passwordFocusNode = FocusNode();
@@ -35,19 +35,21 @@ class ProfilePage extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
-
                 Row(
                   children: [
-
                     Container(
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.grey[200],
+                        color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                       ),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back, size: 20),
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
+                        ),
                         onPressed: () => _logout(context),
                         padding: EdgeInsets.zero,
                       ),
@@ -59,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -71,8 +73,12 @@ class ProfilePage extends StatelessWidget {
 
                 CircleAvatar(
                   radius: 60,
-                  backgroundColor: Colors.grey[300],
-                  child: Icon(Icons.person, size: 60, color: Colors.grey[600]),
+                  backgroundColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                  child: Icon(
+                      Icons.person,
+                      size: 60,
+                      color: isDark ? Colors.grey.shade400 : Colors.grey.shade600
+                  ),
                 ),
                 SizedBox(height: 32),
 
@@ -99,7 +105,6 @@ class ProfilePage extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
 
-
                 CustomTextField(
                   controller: _confirmPasswordController,
                   labelText: 'подтверждение пароля',
@@ -107,7 +112,6 @@ class ProfilePage extends StatelessWidget {
                   isPassword: true,
                 ),
                 SizedBox(height: 32),
-
 
                 Padding(
                   padding: EdgeInsets.only(top: 20),
@@ -117,11 +121,14 @@ class ProfilePage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: _saveProfile,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF507ED1),
+                        backgroundColor: isDark ? Color(0xFF032E6D) : Color(0xFF507ED1),
                         foregroundColor: Colors.white,
                         splashFactory: NoSplash.splashFactory,
                         elevation: 0,
                         shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                       child: Text(
                         'Сохранить',
@@ -140,14 +147,4 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ProfilePage(
-      name: 'Иван Иванов',
-      email: 'ivan@example.com',
-    ),
-  ));
 }
