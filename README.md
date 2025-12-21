@@ -63,8 +63,8 @@
 
 1. **Клонируйте репозиторий**
 ```bash
-git clone https://github.com/yourusername/flutter-learning-journey.git
-cd flutter-learning-journey
+git clone https://github.com/Sh1iba/Development-of-cross-platform-mobile-applications.git
+cd Development-of-cross-platform-mobile-applications
 Установите зависимости
 
 bash
